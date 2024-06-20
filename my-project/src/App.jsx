@@ -1,4 +1,4 @@
-
+import Navbar from './components/navbar';
 import './App.css'
 import {Outlet} from 'react-router-dom';
 
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    <nav>navbar</nav>
+    <Navbar />
      <Outlet />
 <footer>footer</footer>
     </>
