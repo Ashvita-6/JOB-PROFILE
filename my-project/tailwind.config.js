@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      ringWidth: {
+        '1': '1px',
+        '2': '2px',
+      },
+    },
   },
   plugins: [],
 }
