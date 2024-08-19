@@ -14,7 +14,7 @@ const Home1 = () => {
   // Fetch the data from the "jobs.json" file
   useEffect(() => {
     setIsLoading(true);
-    fetch("jobs.json")
+    fetch("http://localhost:5000/all-jobs")
       .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
         // Use the parsed data to update the `jobs` state

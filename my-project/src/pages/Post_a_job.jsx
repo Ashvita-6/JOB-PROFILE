@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 
 const Post_a_job = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  // const [selectedOption, setSelectedOption] = useState(null);
   const options = [
     { value: "JavaScript", label: "JavaScript" },
     { value: "C++", label: "C++" },
@@ -22,7 +23,20 @@ const Post_a_job = () => {
   ];
   const onSubmit = (data) => {
     data.skills = selectedOption;
-    console.log(data);
+    // console.log(data);
+    fetch("http://localhost:5000/post-job", {
+      method: "POST",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if(result.acknowledged===true){
+          alert("Job posted successfully")
+        }
+        reset()
+      });
   };
 
   return (
@@ -143,7 +157,7 @@ text-gray-900 placeholder: text-gray-400 focus: outline-none sm:text-sm sm: lead
             />
           </div>
 
-          {/*6th */} 
+          {/*6th */}
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 py-1">
             <div className="lg:w-1/2 w-full">
               <label className="block mb-2 text-lg">Company Logo</label>
@@ -173,19 +187,25 @@ text-gray-900 placeholder: text-gray-400 focus: outline-none sm:text-sm sm: lead
           {/*7th  */}
           <div className="w-full py-1">
             <label className="block mb-2 text-lg">Job Description</label>
-            <textarea className="w-full pl-3 py-1.5 focus:outline-none placeholder:text-stone-900" rows={6} defaultValue={"lorem ipsom"} placeholder="Job Description" {...register("description")}></textarea>
+            <textarea
+              className="w-full pl-3 py-1.5 focus:outline-none placeholder:text-stone-900"
+              rows={6}
+              defaultValue={"lorem ipsom"}
+              placeholder="Job Description"
+              {...register("description")}
+            ></textarea>
           </div>
 
           {/*8th */}
           <div className="w-full">
-          <label className="block mb-2 text-lg">Job Posted By</label>
-          <input
-                type="email"
-                placeholder="your email"
-                {...register("postedBy")}
-                className="block w-full flex-1 border-1 bg-white py-1.5 pl-3
+            <label className="block mb-2 text-lg">Job Posted By</label>
+            <input
+              type="email"
+              placeholder="your email"
+              {...register("postedBy")}
+              className="block w-full flex-1 border-1 bg-white py-1.5 pl-3
 text-gray-900 placeholder: text-gray-400 focus: outline-none sm:text-sm sm: leading-6"
-              />
+            />
           </div>
           <input
             type="submit"
